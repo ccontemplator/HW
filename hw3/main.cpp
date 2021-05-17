@@ -27,25 +27,27 @@
 #define PI 3.14159
  
 
-//uLCD_4DGL uLCD(D1, D0, D2);
+uLCD_4DGL uLCD(D1, D0, D2);
 DigitalIn btn(USER_BUTTON);
 BufferedSerial pc(USBTX, USBRX);
 DigitalOut led1(LED1);
 DigitalOut led2(LED2);
 DigitalOut led3(LED3);
+EventQueue queue;
 
+Thread printqueue_t;
 Thread t1;
 Thread t2;
 Thread t_model;
 
 float threshold_angle; 
-
 bool flag=true;
+float angle_detect=0;
 
 struct Config config={64,{20, 10,250}};
 
 
-const char* host = "192.168.1.140";
+const char* host = "192.168.1.141";
 
 volatile int message_num = 0;
 volatile int arrivedcount = 0;
@@ -81,7 +83,7 @@ int PredictGesture(float* output) {
     if (output[i] > 0.8) this_predict = i;
   }
 
-  // No gesture was detected above the threshold
+  // No gesture was detected above the printqueue_t
   if (this_predict == -1) {
     continuous_count = 0;
     last_predict = label_num;
@@ -349,8 +351,6 @@ Thread tt;
 
 tt.start(connect_to_mqtt);
 
-
-
     char buf[256], outbuf[256];
 
 
@@ -391,7 +391,6 @@ tt.start(connect_to_mqtt);
 
 
 
-
 void blink(){
     led2=0;
     led1=1;
@@ -402,8 +401,17 @@ void blink(){
     led3=0;
     led2=1; //led2=1  ------------------->function is working right now
 }
+void angle_print(){
+  uLCD.printf("%f\n",angle_detect);
+}
+
+void print_threshold(){
+  uLCD.cls();
+  uLCD.printf("%f\n",threshold_angle);
+}
 
 void select_threshold_angle(){
+    printqueue_t.start(callback(&queue, &EventQueue::dispatch_forever));
     int selection[]={30,35,40};
      
     while(flag){
@@ -411,7 +419,7 @@ void select_threshold_angle(){
         //using gesture to select threshold_angle and display on ulcd
         
         threshold_angle=selection[choose];
-        //printf("%d",selection[choose]);
+        queue.call(print_threshold);
         if(!btn){
             //publish the threshold_angle selected to MQTT broker
             publish_message(&client,threshold_angle);
@@ -423,7 +431,6 @@ void select_threshold_angle(){
 
 void thread_func2(){
     int16_t pDataXYZ[3] = {0};
-    float angle_detect=0;
     int i=0;
 
     int period=500;//(ms)
@@ -440,7 +447,8 @@ void thread_func2(){
         double temp=(sqrt(1-(angle_detect*angle_detect))/angle_detect);
         angle_detect = atan(temp)*180/PI;
         if(angle_detect>threshold_angle){
-            publish_message(&client,angle_detect); //ss<<angle_detect; ss.str();
+            publish_message(&client,angle_detect);
+            queue.call(angle_print); 
             i++;
         }
         ThisThread::sleep_for(period);

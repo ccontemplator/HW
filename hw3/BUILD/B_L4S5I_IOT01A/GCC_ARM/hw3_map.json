@@ -1,8 +1,19 @@
 [
     {
+        "module": "4dgl-ulcd-se/uLCD_4DGL_Text.o",
+        "size": {
+            ".text": 338,
+            ".data": 0,
+            ".bss": 0,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
         "module": "4dgl-ulcd-se/uLCD_4DGL_main.o",
         "size": {
-            ".text": 36,
+            ".text": 538,
             ".data": 0,
             ".bss": 0,
             ".text-delta": 0,
@@ -35,7 +46,7 @@
     {
         "module": "[lib]/c.a",
         "size": {
-            ".text": 52512,
+            ".text": 52552,
             ".data": 2474,
             ".bss": 89,
             ".text-delta": 0,
@@ -123,9 +134,9 @@
     {
         "module": "main.o",
         "size": {
-            ".text": 4990,
+            ".text": 5358,
             ".data": 33,
-            ".bss": 64305,
+            ".bss": 64929,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -145,7 +156,7 @@
     {
         "module": "mbed-os/connectivity",
         "size": {
-            ".text": 10946,
+            ".text": 10908,
             ".data": 99,
             ".bss": 181,
             ".text-delta": 0,
@@ -156,7 +167,7 @@
     {
         "module": "mbed-os/drivers",
         "size": {
-            ".text": 4286,
+            ".text": 4626,
             ".data": 0,
             ".bss": 928,
             ".text-delta": 0,
@@ -189,7 +200,7 @@
     {
         "module": "mbed-os/platform",
         "size": {
-            ".text": 5418,
+            ".text": 5980,
             ".data": 260,
             ".bss": 516,
             ".text-delta": 0,
@@ -276,9 +287,9 @@
     },
     {
         "summary": {
-            "static_ram": 84512,
+            "static_ram": 85136,
             "static_ram_delta": 0,
-            "total_flash": 160160,
+            "total_flash": 162272,
             "total_flash_delta": 0
         }
     }

@@ -2,7 +2,7 @@
     "config": {
     "wifi-ssid": {
             "help": "WiFi SSID",
-            "value": "\"3F WIFI\""
+            "value": "\"2F WIFI\""
     },
     "wifi-password": {
             "help": "WiFi Password",
