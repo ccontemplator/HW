@@ -25,5 +25,5 @@ Enter後顯示有哪些RPC function可使用
  這會終止gestur_ui.
 
 下一步是angle_detection 這個rpc function 會先閃燈表示開始測量reference vector.
-測量完後等待約1秒鐘開始測量與reference vector 呈大於 threshold angle的角度 ，如果大於threshold angle則publish，總共10筆大於threshold angle 的數據，這十筆角度最後會在python code一起印出來，同時luff上也會有這十筆數據。
+測量完後等待約1秒鐘開始測量與reference vector 呈大於 threshold angle的角度 ，如果大於threshold angle則publish，總共10筆大於threshold angle 的數據，這十筆角度最後會在python code一起印出來，同時ulcd上也會有這十筆數據。
 
